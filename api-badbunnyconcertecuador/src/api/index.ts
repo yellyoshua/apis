@@ -4,7 +4,17 @@ const concertStatusKey = "bad-bu";
 export const handlerUpdateConcertStatus: Handler = async (request, headers) => {
   const content = await request.json();
 
-  console.log({ content });
+  const { isPreSale, isOnSaleNow, isOnSaleSoon } = content || {};
+
+  await BadbunnyConcertEcuador.put(
+    concertStatusKey,
+    JSON.stringify({
+      isPreSale,
+      isOnSaleNow,
+      isOnSaleSoon,
+    })
+  );
+
   return createResponse({
     body: null,
     response: { headers, status: 201 },
