@@ -1,5 +1,3 @@
-import { createHeaders } from "./utils/headers";
-
 interface HoneygainControllerArgs {
   endpoint: string;
   token: string;
@@ -13,18 +11,15 @@ export const HoneygainController = ({
   const authorization = `Bearer ${token}`;
 
   const claimRewards = () => {
-    const headers = createHeaders([
-      ["accept", "application/json, text/plain, */*"],
-      ["accept-language", "en-US,en;q=0.9"],
-      ["authority", "dashboard.honeygain.com"],
-      ["content-length", "0"],
-      ["authorization", authorization],
-    ]);
+    const headers = {
+      accept: "application/json, text/plain, */*",
+      "accept-language": "en-US,en;q=0.9",
+      authorization,
+      "sec-gpc": "1",
+    };
 
     return fetch(claimRewardsEndpoint, {
       headers,
-      referrer: "https://dashboard.honeygain.com/",
-      referrerPolicy: "strict-origin-when-cross-origin",
       body: null,
       method: "POST",
     });
