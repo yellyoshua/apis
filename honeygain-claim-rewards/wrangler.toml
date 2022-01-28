@@ -8,7 +8,7 @@ kv_namespaces = [
 ]
 
 [triggers]
-crons = ["10 * */1 * *"]
+crons = ["10 18 * * *"]
 
 [build]
 command = "yarn install && yarn run build"
