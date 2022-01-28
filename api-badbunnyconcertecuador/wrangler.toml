@@ -1,0 +1,13 @@
+name = "api-badbunnyconcertecuador"
+type = "javascript"
+workers_dev = true
+compatibility_date = "2021-12-03"
+
+kv_namespaces = [
+  { binding = "BadbunnyConcertEcuador", id = "b18d4160eb774b0ca660b04b721dd283" }
+]
+
+[build]
+command = "yarn install && yarn run build"
+[build.upload]
+format = "service-worker"

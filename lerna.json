@@ -7,7 +7,9 @@
     "periodic-table",
     "scrappingfreebitcodotin",
     "cronfetchcrypto",
-    "honeygain-claim-rewards"
+    "honeygain-claim-rewards",
+    "badbunnyconcertecuador",
+    "api-badbunnyconcertecuador"
   ],
   "npmClient": "yarn",
   "useWorkspaces": true

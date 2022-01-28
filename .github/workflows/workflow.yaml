@@ -111,3 +111,30 @@ jobs:
         env:
           CF_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
           CF_API_TOKEN: ${{ secrets.CF_WORKERS_API_TOKEN }}
+
+  api-badbunnyconcertecuador:
+    runs-on: ubuntu-latest
+    name: Deploy (api-badbunnyconcertecuador)
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16.13.x
+
+      - name: Install packages
+        run: yarn install
+
+      - name: Unit test's
+        working-directory: api-badbunnyconcertecuador
+        run: yarn run test
+
+      - name: Build APP
+        working-directory: api-badbunnyconcertecuador
+        run: yarn run build
+
+      - name: Deploy Worker
+        working-directory: api-badbunnyconcertecuador
+        run: npx -y @cloudflare/wrangler publish
+        env:
+          CF_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
+          CF_API_TOKEN: ${{ secrets.CF_WORKERS_API_TOKEN }}

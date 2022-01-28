@@ -1,0 +1,11 @@
+import { Router } from "repo-packages-route";
+import * as api from "./api";
+
+addEventListener("fetch", (event) => {
+  const router = new Router(event);
+
+  router.POST("/update", api.handlerUpdateConcertStatus);
+  router.GET("/status", api.handlerConcertStatus);
+
+  router.serve();
+});
