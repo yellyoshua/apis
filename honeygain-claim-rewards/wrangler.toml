@@ -1,0 +1,16 @@
+name = "honeygain-claim-rewards"
+type = "javascript"
+workers_dev = false
+compatibility_date = "2022-01-10"
+
+kv_namespaces = [
+  { binding = "SECRETS", id = "f5c42b50edb945c8a8bd9b1efe7bdc33" }
+]
+
+[triggers]
+crons = ["5 */1 * * *"]
+
+[build]
+command = "yarn install && yarn run build"
+[build.upload]
+format = "service-worker"

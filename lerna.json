@@ -1,0 +1,14 @@
+{
+  "version": "0.0.0",
+  "packages": [
+    "packages/*",
+    "films-service",
+    "globish-service",
+    "periodic-table",
+    "scrappingfreebitcodotin",
+    "cronfetchcrypto",
+    "honeygain-claim-rewards"
+  ],
+  "npmClient": "yarn",
+  "useWorkspaces": true
+}

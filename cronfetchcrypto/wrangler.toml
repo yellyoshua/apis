@@ -1,0 +1,12 @@
+name = "cronfetchcrypto"
+type = "javascript"
+workers_dev = false
+compatibility_date = "2022-01-10"
+
+[triggers]
+crons = ["*/5 * * * *"]
+
+[build]
+command = "yarn install && yarn run build"
+[build.upload]
+format = "service-worker"

@@ -1,0 +1,113 @@
+name: Flow
+on:
+  push:
+    branches: [master]
+
+jobs:
+  films-service:
+    runs-on: ubuntu-latest
+    name: Deploy (films-service)
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16.13.x
+
+      - name: Install packages
+        run: yarn install
+
+      - name: Unit test's
+        working-directory: films-service
+        run: yarn run test
+
+      - name: Build APP
+        working-directory: films-service
+        run: yarn run build
+
+      - name: Deploy Worker
+        working-directory: films-service
+        run: npx -y @cloudflare/wrangler publish
+        env:
+          CF_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
+          CF_API_TOKEN: ${{ secrets.CF_WORKERS_API_TOKEN }}
+
+  periodic-table:
+    runs-on: ubuntu-latest
+    name: Deploy (periodic-table)
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16.13.x
+
+      - name: Install packages
+        run: yarn install
+
+      - name: Unit test's
+        working-directory: periodic-table
+        run: yarn run test
+
+      - name: Build APP
+        working-directory: periodic-table
+        run: yarn run build
+
+      - name: Deploy Worker
+        working-directory: periodic-table
+        run: npx -y @cloudflare/wrangler publish
+        env:
+          CF_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
+          CF_API_TOKEN: ${{ secrets.CF_WORKERS_API_TOKEN }}
+
+  globish-service:
+    runs-on: ubuntu-latest
+    name: Deploy (globish-service)
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16.13.x
+
+      - name: Install packages
+        run: yarn install
+
+      - name: Unit test's
+        working-directory: globish-service
+        run: yarn run test
+
+      - name: Build APP
+        working-directory: globish-service
+        run: yarn run build
+
+      - name: Deploy Worker
+        working-directory: globish-service
+        run: npx -y @cloudflare/wrangler publish
+        env:
+          CF_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
+          CF_API_TOKEN: ${{ secrets.CF_WORKERS_API_TOKEN }}
+
+  honeygain-claim-rewards:
+    runs-on: ubuntu-latest
+    name: Deploy (honeygain-claim-rewards)
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16.13.x
+
+      - name: Install packages
+        run: yarn install
+
+      - name: Unit test's
+        working-directory: honeygain-claim-rewards
+        run: yarn run test
+
+      - name: Build APP
+        working-directory: honeygain-claim-rewards
+        run: yarn run build
+
+      - name: Deploy Worker
+        working-directory: honeygain-claim-rewards
+        run: npx -y @cloudflare/wrangler publish
+        env:
+          CF_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
+          CF_API_TOKEN: ${{ secrets.CF_WORKERS_API_TOKEN }}
