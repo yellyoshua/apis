@@ -1,7 +1,10 @@
 // @ts-check
-const { chromium } = require("playwright-chromium");
+import { chromium } from "playwright-chromium";
+import request from "node-fetch";
 
-module.exports = async function (context, _) {
+const api = "";
+
+export default async function (context, _) {
   const browser = await chromium.launch();
 
   const browserContext = await browser.newContext();
@@ -19,6 +22,13 @@ module.exports = async function (context, _) {
 
   const status = { isPreSale, isOnSaleNow, isOnSaleSoon };
 
+  // @ts-ignore
+  await request(api, {
+    body: JSON.stringify({ isPreSale, isOnSaleNow, isOnSaleSoon }),
+    method: "POST",
+    compress: true,
+  });
+
   context.res = {
     body: {
       status,
@@ -29,4 +39,4 @@ module.exports = async function (context, _) {
   };
 
   await browser.close();
-};
+}

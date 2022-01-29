@@ -1,4 +1,5 @@
 {
+  "scriptFile": "./index.mjs",
   "bindings": [
     {
       "name": "myTimer",
