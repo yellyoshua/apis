@@ -6,9 +6,8 @@ ${ESBUILD_BIN} \
 	src/index.ts \
   --platform=browser \
   --target=es2020 \
-  --format=esm \
+  --format=cjs \
   --conditions=worker,browser \
 	--bundle \
-	--minify \
 	--outfile=dist/worker.js \
 	--allow-overwrite
