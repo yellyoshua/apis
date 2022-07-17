@@ -1,12 +1,12 @@
 import { HoneygainController } from "./controllers";
 
+// TODO: Handle more than one token at a time
+
 async function asynchronousFunc() {
   try {
-    const [API_TOKEN] = await Promise.all([SECRETS.get("API_TOKEN")]);
-
     const honeygainController = HoneygainController({
       endpoint: "https://dashboard.honeygain.com",
-      token: API_TOKEN!,
+      token: API_TOKEN,
     });
 
     const response = await honeygainController.claimRewards();
@@ -14,7 +14,7 @@ async function asynchronousFunc() {
     console.log(content);
     return content;
   } catch (error) {
-    console.log({ error });
+    console.error({ error });
     return { error };
   }
 }
