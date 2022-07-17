@@ -1,0 +1,33 @@
+{
+  "name": "periodic-table",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cloudflare worker TypeScript template",
+  "main": "dist/worker.js",
+  "scripts": {
+    "build": "../../scripts/build.sh",
+    "dev": "wrangler dev",
+    "publish": "wrangler publish",
+    "format": "prettier --write  '*.{json,js}' 'src/**/*.{js,ts}' 'test/**/*.{js,ts}'",
+    "lint": "eslint --max-warnings=0 src && prettier --check '*.{json,js}' 'src/**/*.{js,ts}' 'test/**/*.{js,ts}'",
+    "test": "jest --config jestconfig.json --verbose"
+  },
+  "author": "author",
+  "license": "MIT OR Apache-2.0",
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "typescript",
+      "prettier"
+    ]
+  },
+  "devDependencies": {
+    "esbuild": "0.14.2",
+    "@cloudflare/workers-types": "2.2.2",
+    "@types/jest": "26.0.23",
+    "@types/service-worker-mock": "2.0.1",
+    "jest": "27.0.1",
+    "ts-jest": "27.0.1",
+    "service-worker-mock": "2.0.5"
+  }
+}

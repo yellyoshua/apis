@@ -1,0 +1,10 @@
+name = "periodic-table"
+type = "javascript"
+route = "api.yoshualopez.com/periodic-table/*"
+workers_dev = true
+compatibility_date = "2021-12-03"
+
+[build]
+command = "yarn install && yarn run build"
+[build.upload]
+format = "service-worker"
