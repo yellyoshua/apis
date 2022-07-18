@@ -1,13 +1,4 @@
-/**
- * Welcome to Cloudflare Workers! This is your first worker.
- *
- * - Run `wrangler dev src/index.ts` in your terminal to start a development server
- * - Open a browser tab at http://localhost:8787/ to see your worker in action
- * - Run `wrangler publish src/index.ts --name my-worker` to publish your worker
- *
- * Learn more at https://developers.cloudflare.com/workers/
- */
-
+// @ts-nocheck
 export interface Env {
 	// Example binding to KV. Learn more at https://developers.cloudflare.com/workers/runtime-apis/kv/
 	// MY_KV_NAMESPACE: KVNamespace;
@@ -19,12 +10,24 @@ export interface Env {
 	// MY_BUCKET: R2Bucket;
 }
 
+const services = {
+  '/globish': 'globish',
+  '/periodic-table': 'periodic-table',
+  '/films': 'films',
+};
+
 export default {
 	async fetch(
 		request: Request,
 		env: Env,
 		ctx: ExecutionContext
 	): Promise<Response> {
-		return new Response("Hello World!");
+    const url = new URL(request.url);
+    const path = url.pathname;
+
+    if (services[path] && env[services[path]]) {
+      return await env[services[path]].fetch(request, ctx);
+    }
+		return new Response("404 Not Found", { status: 404 });
 	},
 };
