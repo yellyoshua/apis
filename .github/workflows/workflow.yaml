@@ -28,8 +28,7 @@ jobs:
       - name: Deploy Worker
         uses: cloudflare/wrangler-action@2.0.0
         with:
-          apiKey: ${{ secrets.CF_WORKERS_API_KEY }}
-          email: ${{ secrets.CF_WORKERS_EMAIL }}
+          apiToken: ${{ secrets.CF_WORKERS_API_TOKEN }}
           command: publish dist/worker.js
           wranglerVersion: 2.0.22
           workingDirectory: services/films
@@ -58,8 +57,7 @@ jobs:
       - name: Deploy Worker
         uses: cloudflare/wrangler-action@2.0.0
         with:
-          apiKey: ${{ secrets.CF_WORKERS_API_KEY }}
-          email: ${{ secrets.CF_WORKERS_EMAIL }}
+          apiToken: ${{ secrets.CF_WORKERS_API_TOKEN }}
           command: publish dist/worker.js
           wranglerVersion: 2.0.22
           workingDirectory: services/periodic-table
@@ -88,8 +86,7 @@ jobs:
       - name: Deploy Worker
         uses: cloudflare/wrangler-action@2.0.0
         with:
-          apiKey: ${{ secrets.CF_WORKERS_API_KEY }}
-          email: ${{ secrets.CF_WORKERS_EMAIL }}
+          apiToken: ${{ secrets.CF_WORKERS_API_TOKEN }}
           command: publish dist/worker.js
           wranglerVersion: 2.0.22
           workingDirectory: services/globish
@@ -118,8 +115,7 @@ jobs:
       - name: Deploy Worker
         uses: cloudflare/wrangler-action@2.0.0
         with:
-          apiKey: ${{ secrets.CF_WORKERS_API_KEY }}
-          email: ${{ secrets.CF_WORKERS_EMAIL }}
+          apiToken: ${{ secrets.CF_WORKERS_API_TOKEN }}
           command: publish dist/worker.js
           wranglerVersion: 2.0.22
           workingDirectory: crons/honeygain
@@ -148,8 +144,7 @@ jobs:
       - name: Deploy Worker
         uses: cloudflare/wrangler-action@2.0.0
         with:
-          apiKey: ${{ secrets.CF_WORKERS_API_KEY }}
-          email: ${{ secrets.CF_WORKERS_EMAIL }}
+          apiToken: ${{ secrets.CF_WORKERS_API_TOKEN }}
           command: publish dist/worker.js
           wranglerVersion: 2.0.22
           workingDirectory: services/badbunnyconcertecuador
