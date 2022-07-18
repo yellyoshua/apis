@@ -1,3 +1,9 @@
 name = "gateway"
 main = "src/index.ts"
 compatibility_date = "2022-07-18"
+
+services = [
+  { binding = "globish", service = "globish", environment = "production" },
+  { binding = "periodic-table", service = "periodic-table", environment = "production" },
+  { binding = "films", service = "films", environment = "production" }
+]

@@ -24,10 +24,20 @@ export default {
 	): Promise<Response> {
     const url = new URL(request.url);
     const path = url.pathname;
+    const service = searchPathInServices(path);
 
-    if (services[path] && env[services[path]]) {
-      return await env[services[path]].fetch(request, ctx);
+    if (service && env[service]) {
+      return await env[service].fetch(request, ctx);
     }
 		return new Response("404 Not Found", { status: 404 });
 	},
 };
+
+const searchPathInServices = (path: string) => {
+  for (const key in services) {
+    if (path.slice(0, key.length) === key) {
+      return services[key];
+    }
+  }
+  return null;
+}
