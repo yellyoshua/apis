@@ -6,6 +6,12 @@ on:
 jobs:
   deploy-gateway:
     runs-on: ubuntu-latest
+    needs:
+      - films-service
+      - periodic-table
+      - globish-service
+      - honeygain-cron
+      - badbunnyconcertecuador-service
     name: Deploy (gateway)
     steps:
       - uses: actions/checkout@master
