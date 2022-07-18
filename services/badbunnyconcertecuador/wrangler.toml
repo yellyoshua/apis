@@ -9,3 +9,5 @@ kv_namespaces = [
 
 [build]
 command = "yarn install && yarn run build"
+[build.upload]
+format = "service-worker"

@@ -27,10 +27,10 @@ jobs:
 
       - name: Deploy Worker
         working-directory: services/films
-        run: npx -y wrangler publish
+        run: npx -y @cloudflare/wrangler publish
         env:
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ZONE_ID }}
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_WORKERS_API_TOKEN }}
+          CF_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
+          CF_API_TOKEN: ${{ secrets.CF_WORKERS_API_TOKEN }}
 
   periodic-table:
     runs-on: ubuntu-latest
@@ -55,10 +55,10 @@ jobs:
 
       - name: Deploy Worker
         working-directory: services/periodic-table
-        run: npx -y wrangler publish
+        run: npx -y @cloudflare/wrangler publish
         env:
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ZONE_ID }}
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_WORKERS_API_TOKEN }}
+          CF_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
+          CF_API_TOKEN: ${{ secrets.CF_WORKERS_API_TOKEN }}
 
   globish-service:
     runs-on: ubuntu-latest
@@ -83,10 +83,10 @@ jobs:
 
       - name: Deploy Worker
         working-directory: services/globish
-        run: npx -y wrangler publish
+        run: npx -y @cloudflare/wrangler publish
         env:
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ZONE_ID }}
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_WORKERS_API_TOKEN }}
+          CF_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
+          CF_API_TOKEN: ${{ secrets.CF_WORKERS_API_TOKEN }}
 
   honeygain-cron:
     runs-on: ubuntu-latest
@@ -111,10 +111,10 @@ jobs:
 
       - name: Deploy Worker
         working-directory: crons/honeygain
-        run: npx -y wrangler publish
+        run: npx -y @cloudflare/wrangler publish
         env:
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ZONE_ID }}
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_WORKERS_API_TOKEN }}
+          CF_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
+          CF_API_TOKEN: ${{ secrets.CF_WORKERS_API_TOKEN }}
 
   badbunnyconcertecuador-service:
     runs-on: ubuntu-latest
@@ -139,7 +139,7 @@ jobs:
 
       - name: Deploy Worker
         working-directory: services/badbunnyconcertecuador
-        run: npx -y wrangler publish
+        run: npx -y @cloudflare/wrangler publish
         env:
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ZONE_ID }}
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_WORKERS_API_TOKEN }}
+          CF_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
+          CF_API_TOKEN: ${{ secrets.CF_WORKERS_API_TOKEN }}
