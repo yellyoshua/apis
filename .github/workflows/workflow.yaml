@@ -27,10 +27,10 @@ jobs:
 
       - name: Deploy Worker
         uses: cloudflare/wrangler-action@2.0.0
-        working-directory: services/films
         with:
           apiToken: ${{ secrets.CF_WORKERS_API_TOKEN }}
           command: publish dist/worker.js
+          working-directory: services/films
 
   periodic-table:
     runs-on: ubuntu-latest
@@ -55,10 +55,10 @@ jobs:
 
       - name: Deploy Worker
         uses: cloudflare/wrangler-action@2.0.0
-        working-directory: services/periodic-table
         with:
           apiToken: ${{ secrets.CF_WORKERS_API_TOKEN }}
           command: publish dist/worker.js
+          working-directory: services/periodic-table
 
   globish-service:
     runs-on: ubuntu-latest
@@ -83,10 +83,10 @@ jobs:
 
       - name: Deploy Worker
         uses: cloudflare/wrangler-action@2.0.0
-        working-directory: services/globish
         with:
           apiToken: ${{ secrets.CF_WORKERS_API_TOKEN }}
           command: publish dist/worker.js
+          working-directory: services/globish
 
   honeygain-cron:
     runs-on: ubuntu-latest
@@ -111,10 +111,10 @@ jobs:
 
       - name: Deploy Worker
         uses: cloudflare/wrangler-action@2.0.0
-        working-directory: crons/honeygain
         with:
           apiToken: ${{ secrets.CF_WORKERS_API_TOKEN }}
           command: publish dist/worker.js
+          working-directory: crons/honeygain
 
   badbunnyconcertecuador-service:
     runs-on: ubuntu-latest
@@ -139,7 +139,7 @@ jobs:
 
       - name: Deploy Worker
         uses: cloudflare/wrangler-action@2.0.0
-        working-directory: services/badbunnyconcertecuador
         with:
           apiToken: ${{ secrets.CF_WORKERS_API_TOKEN }}
           command: publish dist/worker.js
+          working-directory: services/badbunnyconcertecuador
