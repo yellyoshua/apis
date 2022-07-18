@@ -1,5 +1,4 @@
 name = "films-service"
-route = "api.yoshualopez.com/films"
 compatibility_date = "2022-05-28"
 main = "dist/worker.js"
 

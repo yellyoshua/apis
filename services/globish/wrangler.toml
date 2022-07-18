@@ -1,5 +1,4 @@
 name = "globish-service"
-route = "api.yoshualopez.com/globish"
 compatibility_date = "2022-05-28"
 main = "dist/worker.js"
 
