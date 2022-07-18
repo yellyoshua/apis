@@ -26,7 +26,6 @@ jobs:
         run: yarn run build
 
       - name: Deploy Worker
-        working-directory: services/films
         uses: cloudflare/wrangler-action@2.0.0
         with:
           apiToken: ${{ secrets.CF_WORKERS_API_TOKEN }}
@@ -53,7 +52,6 @@ jobs:
         run: yarn run build
 
       - name: Deploy Worker
-        working-directory: services/periodic-table
         uses: cloudflare/wrangler-action@2.0.0
         with:
           apiToken: ${{ secrets.CF_WORKERS_API_TOKEN }}
@@ -80,7 +78,6 @@ jobs:
         run: yarn run build
 
       - name: Deploy Worker
-        working-directory: services/globish
         uses: cloudflare/wrangler-action@2.0.0
         with:
           apiToken: ${{ secrets.CF_WORKERS_API_TOKEN }}
@@ -107,7 +104,6 @@ jobs:
         run: yarn run build
 
       - name: Deploy Worker
-        working-directory: crons/honeygain
         uses: cloudflare/wrangler-action@2.0.0
         with:
           apiToken: ${{ secrets.CF_WORKERS_API_TOKEN }}
@@ -134,7 +130,6 @@ jobs:
         run: yarn run build
 
       - name: Deploy Worker
-        working-directory: services/badbunnyconcertecuador
         uses: cloudflare/wrangler-action@2.0.0
         with:
           apiToken: ${{ secrets.CF_WORKERS_API_TOKEN }}
