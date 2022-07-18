@@ -4,6 +4,32 @@ on:
     branches: [master]
 
 jobs:
+  deploy-gateway:
+    runs-on: ubuntu-latest
+    name: Deploy (gateway)
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16.13.x
+
+      - name: Install packages
+        working-directory: gateway
+        run: yarn install
+
+      # - name: Unit test's
+      #   working-directory: gateway
+      #   run: yarn run test
+
+      - name: Deploy Worker
+        uses: cloudflare/wrangler-action@2.0.0
+        with:
+          apiToken: ${{ secrets.CF_WORKERS_API_TOKEN }}
+          accountId: ${{ secrets.CF_WORKERS_ACCOUNT_ID }}
+          command: publish src/index.ts
+          wranglerVersion: 2.0.14
+          workingDirectory: gateway
+
   films-service:
     runs-on: ubuntu-latest
     name: Deploy (films-service)
