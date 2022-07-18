@@ -14,6 +14,7 @@ const services = {
   '/globish': 'globish',
   '/periodic-table': 'periodic-table',
   '/films': 'films',
+  '/badbunnyconcertecuador': 'badbunnyconcertecuador',
 };
 
 export default {
