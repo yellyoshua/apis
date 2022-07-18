@@ -2,7 +2,7 @@ import { Router, createResponse } from "../../shared";
 
 const concertStatusKey = "bad-bu";
 
-export const handlerUpdateConcertStatus = async (request: any, headers: any) => {
+const handlerUpdateConcertStatus = async (request: any, headers: any) => {
   const content = await request.json();
 
   const { isPreSale, isOnSaleNow, isOnSaleSoon } = content || {};
@@ -22,7 +22,7 @@ export const handlerUpdateConcertStatus = async (request: any, headers: any) => 
   });
 };
 
-export const handlerConcertStatus = async (_: any, headers: any) => {
+const handlerConcertStatus = async (_: any, headers: any) => {
   const content = await BadbunnyConcertEcuador.get<Record<string, any>>(concertStatusKey, "json");
   const {
     isPreSale = false,
@@ -37,14 +37,11 @@ export const handlerConcertStatus = async (_: any, headers: any) => {
 };
 
 
-// @ts-ignore
-if (globalThis.addEventListener) {
-  addEventListener("fetch", (event) => {
-    const router = new Router(event);
+addEventListener("fetch", (event) => {
+  const router = new Router(event);
 
-    router.POST("/update", handlerUpdateConcertStatus);
-    router.GET("/status", handlerConcertStatus);
+  router.POST("/update", handlerUpdateConcertStatus);
+  router.GET("/status", handlerConcertStatus);
 
-    router.serve();
-  });
-}
+  router.serve();
+});
