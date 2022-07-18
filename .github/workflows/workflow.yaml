@@ -17,9 +17,9 @@ jobs:
         working-directory: services/films
         run: yarn install
 
-      - name: Unit test's
-        working-directory: services/films
-        run: yarn run test
+      # - name: Unit test's
+      #   working-directory: services/films
+      #   run: yarn run test
 
       - name: Build APP
         working-directory: services/films
@@ -45,9 +45,9 @@ jobs:
         working-directory: services/periodic-table
         run: yarn install
 
-      - name: Unit test's
-        working-directory: services/periodic-table
-        run: yarn run test
+      # - name: Unit test's
+      #   working-directory: services/periodic-table
+      #   run: yarn run test
 
       - name: Build APP
         working-directory: services/periodic-table
@@ -73,9 +73,9 @@ jobs:
         working-directory: services/globish
         run: yarn install
 
-      - name: Unit test's
-        working-directory: services/globish
-        run: yarn run test
+      # - name: Unit test's
+      #   working-directory: services/globish
+      #   run: yarn run test
 
       - name: Build APP
         working-directory: services/globish
@@ -101,9 +101,9 @@ jobs:
         working-directory: crons/honeygain
         run: yarn install
 
-      - name: Unit test's
-        working-directory: crons/honeygain
-        run: yarn run test
+      # - name: Unit test's
+      #   working-directory: crons/honeygain
+      #   run: yarn run test
 
       - name: Build APP
         working-directory: crons/honeygain
@@ -129,9 +129,9 @@ jobs:
         working-directory: services/badbunnyconcertecuador
         run: yarn install
 
-      - name: Unit test's
-        working-directory: services/badbunnyconcertecuador
-        run: yarn run test
+      # - name: Unit test's
+      #   working-directory: services/badbunnyconcertecuador
+      #   run: yarn run test
 
       - name: Build APP
         working-directory: services/badbunnyconcertecuador
