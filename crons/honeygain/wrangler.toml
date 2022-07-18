@@ -1,6 +1,5 @@
 name = "honeygain"
 type = "javascript"
-workers_dev = false
 compatibility_date = "2022-01-10"
 
 [triggers]

@@ -1,6 +1,5 @@
 name = "periodic-table"
 route = "api.yoshualopez.com/periodic-table/*"
-workers_dev = true
 compatibility_date = "2022-05-28"
 main = "dist/worker.js"
 

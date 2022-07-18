@@ -1,5 +1,4 @@
 name = "api-badbunnyconcertecuador"
-workers_dev = true
 compatibility_date = "2022-05-28"
 main = "dist/worker.js"
 
