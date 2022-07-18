@@ -29,6 +29,7 @@ jobs:
         uses: cloudflare/wrangler-action@2.0.0
         with:
           apiToken: ${{ secrets.CF_WORKERS_API_TOKEN }}
+          command: publish dist/worker.js
 
   periodic-table:
     runs-on: ubuntu-latest
@@ -55,6 +56,7 @@ jobs:
         uses: cloudflare/wrangler-action@2.0.0
         with:
           apiToken: ${{ secrets.CF_WORKERS_API_TOKEN }}
+          command: publish dist/worker.js
 
   globish-service:
     runs-on: ubuntu-latest
@@ -81,6 +83,7 @@ jobs:
         uses: cloudflare/wrangler-action@2.0.0
         with:
           apiToken: ${{ secrets.CF_WORKERS_API_TOKEN }}
+          command: publish dist/worker.js
 
   honeygain-cron:
     runs-on: ubuntu-latest
@@ -107,6 +110,7 @@ jobs:
         uses: cloudflare/wrangler-action@2.0.0
         with:
           apiToken: ${{ secrets.CF_WORKERS_API_TOKEN }}
+          command: publish dist/worker.js
 
   badbunnyconcertecuador-service:
     runs-on: ubuntu-latest
@@ -133,3 +137,4 @@ jobs:
         uses: cloudflare/wrangler-action@2.0.0
         with:
           apiToken: ${{ secrets.CF_WORKERS_API_TOKEN }}
+          command: publish dist/worker.js
