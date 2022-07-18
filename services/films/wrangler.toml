@@ -1,10 +1,8 @@
 name = "films-service"
-type = "javascript"
 route = "api.yoshualopez.com/films"
 workers_dev = true
-compatibility_date = "2021-10-15"
+compatibility_date = "2022-05-28"
+main = "dist/worker.js"
 
 [build]
 command = "yarn install && yarn run build"
-[build.upload]
-format = "service-worker"
