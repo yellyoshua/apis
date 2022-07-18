@@ -1,4 +1,4 @@
-# API's services 
+# API's services
 
 <p align="center">
   <strong>Languajes 🚀 - Tools 🤖</strong>
@@ -15,6 +15,6 @@
 
 | Codebase                         |      Description      |
 | :------------------------------- | :-------------------: |
-| [films-service](films-service)   |   Sample Films API    |
-| [periodic-table](periodic-table) | Periodic Elements API |
-| [packages](packages)             | custom yarn packages  |
+| [films-service](services/films)   |   Sample Films API    |
+| [periodic-table](services/periodic-table) | Periodic Elements API |
+| [globish-service](services/globish)   |   Globish words service    |
