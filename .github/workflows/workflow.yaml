@@ -30,7 +30,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_WORKERS_API_TOKEN }}
           command: publish dist/worker.js
-          wranglerVersion: 2.0.22
+          wranglerVersion: 2.0.14
           workingDirectory: services/films
 
   periodic-table:
@@ -59,7 +59,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_WORKERS_API_TOKEN }}
           command: publish dist/worker.js
-          wranglerVersion: 2.0.22
+          wranglerVersion: 2.0.14
           workingDirectory: services/periodic-table
 
   globish-service:
@@ -88,7 +88,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_WORKERS_API_TOKEN }}
           command: publish dist/worker.js
-          wranglerVersion: 2.0.22
+          wranglerVersion: 2.0.14
           workingDirectory: services/globish
 
   honeygain-cron:
@@ -117,7 +117,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_WORKERS_API_TOKEN }}
           command: publish dist/worker.js
-          wranglerVersion: 2.0.22
+          wranglerVersion: 2.0.14
           workingDirectory: crons/honeygain
 
   badbunnyconcertecuador-service:
@@ -146,5 +146,5 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_WORKERS_API_TOKEN }}
           command: publish dist/worker.js
-          wranglerVersion: 2.0.22
+          wranglerVersion: 2.0.14
           workingDirectory: services/badbunnyconcertecuador
