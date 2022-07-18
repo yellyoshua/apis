@@ -30,7 +30,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_WORKERS_API_TOKEN }}
           command: publish dist/worker.js
-          working-directory: services/films
+          workingDirectory: services/films
 
   periodic-table:
     runs-on: ubuntu-latest
@@ -58,7 +58,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_WORKERS_API_TOKEN }}
           command: publish dist/worker.js
-          working-directory: services/periodic-table
+          workingDirectory: services/periodic-table
 
   globish-service:
     runs-on: ubuntu-latest
@@ -86,7 +86,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_WORKERS_API_TOKEN }}
           command: publish dist/worker.js
-          working-directory: services/globish
+          workingDirectory: services/globish
 
   honeygain-cron:
     runs-on: ubuntu-latest
@@ -114,7 +114,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_WORKERS_API_TOKEN }}
           command: publish dist/worker.js
-          working-directory: crons/honeygain
+          workingDirectory: crons/honeygain
 
   badbunnyconcertecuador-service:
     runs-on: ubuntu-latest
@@ -142,4 +142,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_WORKERS_API_TOKEN }}
           command: publish dist/worker.js
-          working-directory: services/badbunnyconcertecuador
+          workingDirectory: services/badbunnyconcertecuador
