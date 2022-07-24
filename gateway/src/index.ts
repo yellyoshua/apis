@@ -30,7 +30,7 @@ export default {
       return await service.fetch(request, env, ctx);
     }
 
-		return fetch(request);
+		return new Response("What do you mean?", { status: 200 });
 	},
 };
 
