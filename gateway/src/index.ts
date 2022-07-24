@@ -24,21 +24,27 @@ export default {
 		ctx: ExecutionContext
 	): Promise<Response> {
     const url = new URL(request.url);
-    const path = url.pathname;
-    const service = searchPathInServices(path);
+    const service = getService(env, url.pathname);
 
-    if (service && env[service]) {
-      return await env[service].fetch(request, ctx);
+    if (service) {
+      return await service.fetch(request, env, ctx);
     }
-		return new Response("404 Not Found", { status: 404 });
+
+		return fetch(request);
 	},
 };
 
-const searchPathInServices = (path: string) => {
-  for (const key in services) {
-    if (path.slice(0, key.length) === key) {
-      return services[key];
-    }
+function getService(env: Env, path: string) {
+  const basePath = cleanPath(path);
+
+  if (services[basePath] && env[services[basePath]]) {
+    return env[services[basePath]];
   }
+
   return null;
+}
+
+function cleanPath(path: string) {
+  const firstPath = path.split('/').slice(0, 2).join('/');
+  return firstPath.split('?').shift();
 }
