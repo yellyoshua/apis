@@ -86,8 +86,9 @@ export function routesSetup(routes: Route[]) {
 
     const url = cleanPath(fetchEvent.request.url);
     const method = fetchEvent.request.method.toLowerCase();
+    const handler = getRouteHandler(url, method);
 
-    if (!routesObj[url] || !routesObj[url][method]) {
+    if (!handler) {
       console.log(`No route found for ${url} ${method}`);
       return fetch(fetchEvent.request);
     }
@@ -98,7 +99,6 @@ export function routesSetup(routes: Route[]) {
       }
     };
 
-    const handler = routesObj[url][method];
     const query = composeQueries(fetchEvent.request.url);
     if (method === 'get') {
       const request: CustomRequest = {...fetchEvent.request, data: {}, query};
@@ -119,4 +119,13 @@ export function routesSetup(routes: Route[]) {
       fetchEvent.respondWith(resolvePost());
     }
   }
+}
+
+function getRouteHandler(urlCleaned: string, method: string) {
+  for (const path in routesObj) {
+    if (urlCleaned.endsWith(path)) {
+      return routesObj[path][method];
+    }
+  }
+  return null;
 }
