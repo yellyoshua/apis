@@ -1,4 +1,4 @@
-// @ts-nocheck
+
 export interface Env {
 	// Example binding to KV. Learn more at https://developers.cloudflare.com/workers/runtime-apis/kv/
 	// MY_KV_NAMESPACE: KVNamespace;
@@ -10,41 +10,27 @@ export interface Env {
 	// MY_BUCKET: R2Bucket;
 }
 
-const services = {
-  '/globish': 'globish',
-  '/periodic-table': 'periodic-table',
-  '/films': 'films',
-  '/badbunnyconcertecuador': 'badbunnyconcertecuador',
-};
+const servicesList = [
+  {path: '/globish', name: 'globish'},
+  {path: '/periodic-table', name: 'periodic-table'},
+  {path: '/films', name: 'films'},
+  {path: '/badbunnyconcertecuador', name: 'badbunnyconcertecuador'},
+];
 
 export default {
-	async fetch(
-		request: Request,
-		env: Env,
-		ctx: ExecutionContext
-	): Promise<Response> {
-    const url = new URL(request.url);
-    const service = getService(env, url.pathname);
+	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+    const {pathname} = new URL(request.url);
+    const basePath = cleanPath(pathname);
+    const service = servicesList.find(({path}) => basePath === path);
 
-    if (service) {
-      return await service.fetch(request, env, ctx);
-    }
-
-		return new Response("What do you mean?", { status: 200 });
+    return service
+      // @ts-ignore
+      ? env[service.name].fetch(request, env, ctx)
+      : new Response("What do you mean?", { status: 200 })
 	},
 };
 
-function getService(env: Env, path: string) {
-  const basePath = cleanPath(path);
-
-  if (services[basePath] && env[services[basePath]]) {
-    return env[services[basePath]];
-  }
-
-  return null;
-}
-
-function cleanPath(path: string) {
+function cleanPath(path: string): string {
   const firstPath = path.split('/').slice(0, 2).join('/');
-  return firstPath.split('?').shift();
+  return firstPath.split('?')[0] || '';
 }
