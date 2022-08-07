@@ -8,7 +8,7 @@ describe("handle", () => {
       envPath: true,
       packagePath: true,
       wranglerConfigPath: true,
-      buildCommand: undefined,
+      buildCommand: 'npm run build',
     });
   });
 
