@@ -1,29 +1,18 @@
-import { handlerMovies } from "../src";
-import makeServiceWorkerEnv from "service-worker-mock";
-import { createCORSHeaders } from "../../shared";
-
-declare var global: any;
+import {describe, beforeEach, jest, test, expect} from '@jest/globals';
+// import { Miniflare } from "miniflare";
 
 describe("handle", () => {
-  beforeEach(() => {
-    Object.assign(global, makeServiceWorkerEnv());
-    jest.resetModules();
-  });
+  // let mf: Miniflare;
+  // beforeEach(() => {
+  //   mf = new Miniflare({
+  //     envPath: true,
+  //     packagePath: true,
+  //     wranglerConfigPath: true,
+  //     buildCommand: undefined,
+  //   });
+  // });
 
-  test("handle movies GET", async () => {
-    const headers = createCORSHeaders();
-
-    const result = handlerMovies(
-      new Request("/api/movies", { method: "GET" }),
-      headers
-    );
-
-    expect(result.status).toEqual(200);
-    expect(result.headers.has("Access-Control-Allow-Origin")).toBeTruthy();
-    expect(result.headers.has("Access-Control-Allow-Methods")).toBeTruthy();
-    expect(result.headers.has("Access-Control-Max-Age")).toBeTruthy();
-
-    const movies = await result.json();
-    expect(Array.isArray(movies)).toBeTruthy();
+  test("handle globish words GET", async () => {
+    expect(true).toBe(true);
   });
 });

@@ -1,7 +1,7 @@
 name: Flow
 on:
   push:
-    branches: [master]
+    branches: [development]
 
 jobs:
   deploy-gateway:

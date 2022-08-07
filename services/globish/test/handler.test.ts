@@ -1,29 +1,22 @@
-import { handlerGlobishWords } from "../src";
-import makeServiceWorkerEnv from "service-worker-mock";
-import { createCORSHeaders } from "../../shared";
-
-declare var global: any;
+import {describe, beforeEach, jest, test, expect} from '@jest/globals';
+import { Miniflare } from "miniflare";
 
 describe("handle", () => {
+  let mf: Miniflare;
   beforeEach(() => {
-    Object.assign(global, makeServiceWorkerEnv());
-    jest.resetModules();
+    mf = new Miniflare({
+      envPath: true,
+      packagePath: true,
+      wranglerConfigPath: true,
+      buildCommand: undefined,
+    });
   });
 
   test("handle globish words GET", async () => {
-    const headers = createCORSHeaders();
+    const response = await mf.dispatchFetch('http://localhost/')
+    const body = await response.json<[]>();
 
-    const result = await handlerGlobishWords(
-      new Request("/api/globish-words", { method: "GET" }),
-      headers
-    );
-
-    expect(result.status).toEqual(200);
-    expect(result.headers.has("Access-Control-Allow-Origin")).toBeTruthy();
-    expect(result.headers.has("Access-Control-Allow-Methods")).toBeTruthy();
-    expect(result.headers.has("Access-Control-Max-Age")).toBeTruthy();
-
-    const movies = await result.json();
-    expect(Array.isArray(movies)).toBeTruthy();
+    expect(response.status).toBe(200);
+    expect(body.length).toBe(1500);
   });
 });

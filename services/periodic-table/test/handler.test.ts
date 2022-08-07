@@ -1,46 +1,30 @@
-import { handlerPeriodicTable, handlerNewPeriodicTable } from "../src";
-import makeServiceWorkerEnv from "service-worker-mock";
-import { createCORSHeaders } from "../../shared";
-
-declare var global: any;
+import {describe, beforeEach, jest, test, expect} from '@jest/globals';
+import { Miniflare } from "miniflare";
 
 describe("handle", () => {
+  let mf: Miniflare;
   beforeEach(() => {
-    Object.assign(global, makeServiceWorkerEnv());
-    jest.resetModules();
+    mf = new Miniflare({
+      envPath: true,
+      packagePath: true,
+      wranglerConfigPath: true,
+      buildCommand: undefined,
+    });
   });
 
-  test("handle periodic-table GET", async () => {
-    const headers = createCORSHeaders();
+  test("handle previous words GET", async () => {
+    const response = await mf.dispatchFetch('http://localhost/previous')
+    const body = await response.json<[]>();
 
-    const result = await handlerPeriodicTable(
-      new Request("/previous", { method: "GET" }),
-      headers
-    );
-
-    expect(result.status).toEqual(200);
-    expect(result.headers.has("Access-Control-Allow-Origin")).toBeTruthy();
-    expect(result.headers.has("Access-Control-Allow-Methods")).toBeTruthy();
-    expect(result.headers.has("Access-Control-Max-Age")).toBeTruthy();
-
-    const movies = await result.json();
-    expect(Array.isArray(movies)).toBeTruthy();
+    expect(response.status).toBe(200);
+    expect(body.length).toBe(118);
   });
 
-  test("handle new-periodic-table GET", async () => {
-    const headers = createCORSHeaders();
+  test("handle latest words GET", async () => {
+    const response = await mf.dispatchFetch('http://localhost/latest')
+    const body = await response.json<[]>();
 
-    const result = await handlerNewPeriodicTable(
-      new Request("/latest", { method: "GET" }),
-      headers
-    );
-
-    expect(result.status).toEqual(200);
-    expect(result.headers.has("Access-Control-Allow-Origin")).toBeTruthy();
-    expect(result.headers.has("Access-Control-Allow-Methods")).toBeTruthy();
-    expect(result.headers.has("Access-Control-Max-Age")).toBeTruthy();
-
-    const movies = await result.json();
-    expect(Array.isArray(movies)).toBeTruthy();
+    expect(response.status).toBe(200);
+    expect(body.length).toBe(118);
   });
 });
