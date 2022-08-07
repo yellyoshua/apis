@@ -22,11 +22,6 @@ jobs:
   deploys:
     runs-on: ubuntu-latest
     name: Deploys
-    env:
-      - name: CLOUDFLARE_API_TOKEN
-        value: ${{ secrets.CF_WORKERS_API_TOKEN }}
-      - name: CLOUDFLARE_ACCOUNT_ID
-        value: ${{ secrets.CF_WORKERS_ACCOUNT_ID }}
     needs:
       - tests
     steps:
@@ -40,10 +35,16 @@ jobs:
           ./execute_deploys_services.sh services/globish
           ./execute_deploys_services.sh services/films
           ./execute_deploys_services.sh services/periodic-table
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_WORKERS_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_WORKERS_ACCOUNT_ID }}
 
       - name: Execute Deploys (Crons)
         run: |
           ./execute_deploys_crons.sh crons/honeygain
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_WORKERS_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_WORKERS_ACCOUNT_ID }}
 
   gateway:
     runs-on: ubuntu-latest

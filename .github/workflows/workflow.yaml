@@ -23,6 +23,10 @@ jobs:
         working-directory: gateway
         run: yarn install
 
+      # - name: Unit test's
+      #   working-directory: gateway
+      #   run: yarn run test
+
       - name: Deploy Worker
         uses: cloudflare/wrangler-action@2.0.0
         with:
