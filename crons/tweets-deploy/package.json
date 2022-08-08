@@ -1,6 +1,7 @@
 {
   "name": "tweets-deploy",
   "version": "0.0.0",
+  "main": "src/index.ts",
   "devDependencies": {
     "@cloudflare/workers-types": "^3.14.1",
     "@types/underscore": "^1.11.4",
