@@ -1,6 +1,11 @@
 import * as Realm from 'realm-web';
 import { routesSetup, NewHandler, newRealmClient } from "../../shared";
 
+const getHeaderValue = (headers: Headers | Record<string, any>, headerKey: string) => {
+  // @ts-ignore
+  return headers.get ? headers.get(headerKey) : headers[headerKey];
+}
+
 const client = newRealmClient(Realm, {
   REALM_APP_ID: REALM_APP_ID,
   REALM_APP_API_KEY: REALM_APP_API_KEY
@@ -14,7 +19,7 @@ const handlerTweets: NewHandler = async (request, response) => {
 };
 
 const handlerTwitterAuthorization: NewHandler = async (req, response) => {
-  if (!hasAuthorization(req.headers.get('authorization'))) {
+  if (!hasAuthorization(getHeaderValue(req.headers, 'authorization'))) {
     return response.json({error: "Unauthorized"}, 401);
   }
 
@@ -35,7 +40,7 @@ const handlerTwitterAuthorization: NewHandler = async (req, response) => {
 }
 
 const handlerNewTweet: NewHandler = async (req, response) => {
-  if (!hasAuthorization(req.headers.get('authorization'))) {
+  if (!hasAuthorization(getHeaderValue(req.headers, 'authorization'))) {
     return response.json({error: "Unauthorized"}, 401);
   }
 
