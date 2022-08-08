@@ -1,0 +1,4 @@
+name = "tweets-service"
+compatibility_date = "2022-05-28"
+main = "src/index.ts"
+node_compat = true

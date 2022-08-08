@@ -18,7 +18,8 @@ jobs:
           ./execute_tests.sh \
               services/globish \
               services/films \
-              services/periodic-table
+              services/periodic-table \
+              services/tweets
 
   deploys:
     runs-on: ubuntu-latest
@@ -36,7 +37,8 @@ jobs:
           ./execute_deploys_services.sh \
               services/globish \
               services/films \
-              services/periodic-table
+              services/periodic-table \
+              services/tweets
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_WORKERS_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_WORKERS_ACCOUNT_ID }}
