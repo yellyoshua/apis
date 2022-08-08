@@ -21,5 +21,8 @@ services=$@
 
 for service in $services; do
   install_dependencies $service
+done
+
+for service in $services; do
   deploy_service $service
 done
