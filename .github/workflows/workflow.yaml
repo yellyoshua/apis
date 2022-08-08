@@ -46,7 +46,6 @@ jobs:
       - name: Execute Deploys (Crons)
         run: |
           ./execute_deploys_crons.sh \
-              crons/honeygain \
               crons/tweets-deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_WORKERS_API_TOKEN }}
