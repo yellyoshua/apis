@@ -17,7 +17,7 @@ interface Route {
 }
 
 function handleServerError(error?: Error) {
-  console.error(error?.message);
+  console.error(error);
   return new Response('Error with the server', { status: 500 });
 }
 
