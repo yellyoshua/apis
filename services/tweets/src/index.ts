@@ -2,6 +2,7 @@ import * as Realm from 'realm-web';
 import { routesSetup, NewHandler, newRealmClient } from "../../shared";
 
 const getHeaderValue = (headers: Headers | Record<string, any>, headerKey: string) => {
+  console.log('headers', headers);
   // @ts-ignore
   return headers.get ? headers.get(headerKey) : headers[headerKey];
 }
