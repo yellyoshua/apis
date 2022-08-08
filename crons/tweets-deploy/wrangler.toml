@@ -1,6 +1,7 @@
 name = "tweets-deploy"
-main = "src/index.ts"
 compatibility_date = "2022-08-08"
+main = "src/index.ts"
+workers_dev = false
 
 [triggers]
 crons = [ "0 12 * * *" ]
