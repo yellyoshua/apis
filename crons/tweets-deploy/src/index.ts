@@ -2,25 +2,22 @@ import * as Realm from 'realm-web';
 import _ from 'underscore';
 import { newRealmClient } from "../../../shared";
 
-const client = newRealmClient(Realm, {
-  REALM_APP_ID: REALM_APP_ID,
-  REALM_APP_API_KEY: REALM_APP_API_KEY
-}).mongoClient('tweet-bot');
+export interface Env {
+  REALM_APP_ID: string;
+  REALM_APP_API_KEY: string;
+}
 
-export interface Env {}
-
-async function getTweets(collection: any) {
-  const tweets = await collection.find(
+async function getTweets(tweets: any, sessions: any) {
+  const tweetsData = await tweets.find(
     {posted: {$ne: true}},
     {sort: {created_at: -1}, limit: 100}
   );
 
-  const sessionIds = _(tweets).pluck('session');
-  const sessions = await client.crud("sessions");
+  const sessionIds = _(tweetsData).pluck('session');
   const sessionsData = await sessions.find({_id: {$in: sessionIds}});
   const sessionsMap = _(sessionsData).indexBy('_id');
 
-  return _(tweets).map(tweet => {
+  return _(tweetsData).map(tweet => {
     const {authorization} = sessionsMap[tweet.session];
     return {tweet: tweet._id, content: tweet.content, authorization};
   });
@@ -43,15 +40,16 @@ async function sendTweet(authorization: string, content: string) {
   return response.json();
 }
 
-async function executeTweetsCron() {
-  const collection = await client.crud("tweets");
-  const tweets = await getTweets(collection);
+async function executeTweetsCron(client: any) {
+  const tweets = await client.crud("tweets");
+  const sessions = await client.crud("sessions");
+  const tweetsData = await getTweets(tweets, sessions);
 
-  for (const tweet of tweets) {
+  for (const tweet of tweetsData) {
     const {authorization, content} = tweet;
     const response = await sendTweet(authorization, content);
     console.log(response);
-    await collection.update({_id: tweet.tweet}, {posted: true});
+    await tweets.update({_id: tweet.tweet}, {posted: true});
     console.log(`Tweet ${tweet.tweet} posted!`);
   }
 }
@@ -62,6 +60,11 @@ export default {
 		env: Env,
 		ctx: ExecutionContext
 	): Promise<void> {
-    ctx.waitUntil(executeTweetsCron());
+    const client = newRealmClient(Realm, {
+      REALM_APP_ID: env.REALM_APP_ID,
+      REALM_APP_API_KEY: env.REALM_APP_API_KEY
+    }).mongoClient('tweet-bot');
+
+    ctx.waitUntil(executeTweetsCron(client));
 	},
 };

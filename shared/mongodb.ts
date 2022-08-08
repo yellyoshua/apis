@@ -16,7 +16,7 @@ function crud(db: any, collectionName: string) {
       return collection.insertOne(doc);
     },
     async update(query: Record<string, any>, doc: Record<string, any>) {
-      return collection.updateOne(query, doc);
+      return collection.updateOne(query, {$set: doc});
     },
     async delete(_id: string) {
       return collection.deleteOne({_id});
