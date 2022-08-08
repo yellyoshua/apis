@@ -15,7 +15,12 @@ const client = newRealmClient(Realm, {
 const handlerTweets: NewHandler = async (request, response) => {
   const tweets = await client.crud("tweets");
   const session = request.query.session;
-  const tweetsList = await tweets.find({session});
+
+  const tweetsList = await tweets.find(
+    // @ts-ignore
+    {session: Realm.BSON.ObjectId(session)},
+    {sort: {created_at: -1}, limit: 100}
+  );
   return response.json({response: tweetsList}, 200);
 };
 
@@ -36,8 +41,7 @@ const handlerTwitterAuthorization: NewHandler = async (req, response) => {
     return response.json({body}, 200);
   }
   const newSession = await sessions.insert({authorization, username});
-  const body = JSON.stringify({response: newSession.insertedId});
-  return response.json({body}, 200);
+  return response.json({newSession}, 200);
 }
 
 const handlerNewTweet: NewHandler = async (req, response) => {
@@ -51,7 +55,8 @@ const handlerNewTweet: NewHandler = async (req, response) => {
   }
 
   const sessions = await client.crud("sessions");
-  const sessionData = await sessions.findOne({_id: session});
+  // @ts-ignore
+  const sessionData = await sessions.findOne({_id: Realm.BSON.ObjectID(session)});
   if (!sessionData) {
     return response.json({error: "Session not found"}, 404);
   }
