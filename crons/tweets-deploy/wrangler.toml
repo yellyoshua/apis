@@ -1,0 +1,6 @@
+name = "tweets-deploy"
+main = "src/index.ts"
+compatibility_date = "2022-08-08"
+
+[triggers]
+crons = [ "*/10 * * * *" ]

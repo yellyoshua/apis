@@ -6,8 +6,8 @@ interface RealmCredentials {
 function crud(db: any, collectionName: string) {
   const collection = db.collection(collectionName);
   return {
-    async find<T = any>(query: Record<string, any>): Promise<T[]> {
-      return collection.find(query);
+    async find<T = any>(query: Record<string, any>, options: Record<string, any> = {}): Promise<T[]> {
+      return collection.find(query, options);
     },
     async findOne<T = any>(query: Record<string, any>): Promise<T> {
       return collection.findOne(query);
