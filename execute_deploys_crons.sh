@@ -10,8 +10,19 @@ function install_dependencies {
     cd $WORKING_DIR
 }
 
+function deploy_cron {
+    echo "Deploying $1"
+    cd $1
+    npx --yes wrangler publish
+    cd $WORKING_DIR
+}
+
 services=$@
 
-for service in $services; do
-  install_dependencies $service
+for cron in $services; do
+  install_dependencies $cron
+done
+
+for cron in $services; do
+  deploy_cron $cron
 done
