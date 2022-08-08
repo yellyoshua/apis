@@ -1,4 +1,5 @@
 import * as Realm from 'realm-web';
+import _ from 'underscore';
 import { newRealmClient } from "../../../shared";
 
 const client = newRealmClient(Realm, {
@@ -14,7 +15,15 @@ async function getTweets(collection: any) {
     {sort: {created_at: -1}, limit: 100}
   );
 
-  return tweets;
+  const sessionIds = _(tweets).pluck('session');
+  const sessions = await client.crud("sessions");
+  const sessionsData = await sessions.find({_id: {$in: sessionIds}});
+  const sessionsMap = _(sessionsData).indexBy('_id');
+
+  return _(tweets).map(tweet => {
+    const {authorization} = sessionsMap[tweet.session];
+    return {tweet: tweet._id, content: tweet.content, authorization};
+  });
 }
 
 async function sendTweet(authorization: string, content: string) {
@@ -37,12 +46,13 @@ async function sendTweet(authorization: string, content: string) {
 async function executeTweetsCron() {
   const collection = await client.crud("tweets");
   const tweets = await getTweets(collection);
+
   for (const tweet of tweets) {
     const {authorization, content} = tweet;
     const response = await sendTweet(authorization, content);
     console.log(response);
-    await collection.update({_id: tweet._id}, {posted: true});
-    console.log(`Tweet ${tweet._id} posted!`);
+    await collection.update({_id: tweet.tweet}, {posted: true});
+    console.log(`Tweet ${tweet.tweet} posted!`);
   }
 }
 
