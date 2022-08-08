@@ -65,8 +65,8 @@ const handlerNewTweet: NewHandler = async (req, response) => {
     session: sessionData._id,
     content,
   });
-  const body = JSON.stringify({response: newTweet.insertedId});
-  return response.json({body}, 200);
+
+  return response.json(newTweet, 200);
 }
 
 const handlerStatus: NewHandler = async (req, response) => {
