@@ -15,9 +15,10 @@ jobs:
 
       - name: Execute Tests
         run: |
-          ./execute_tests.sh services/globish
-          ./execute_tests.sh services/films
-          ./execute_tests.sh services/periodic-table
+          ./execute_tests.sh \
+              services/globish \
+              services/films \
+              services/periodic-table
 
   deploys:
     runs-on: ubuntu-latest
@@ -32,16 +33,18 @@ jobs:
 
       - name: Execute Deploys (Services)
         run: |
-          ./execute_deploys_services.sh services/globish
-          ./execute_deploys_services.sh services/films
-          ./execute_deploys_services.sh services/periodic-table
+          ./execute_deploys_services.sh \
+              services/globish \
+              services/films \
+              services/periodic-table
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_WORKERS_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_WORKERS_ACCOUNT_ID }}
 
       - name: Execute Deploys (Crons)
         run: |
-          ./execute_deploys_crons.sh crons/honeygain
+          ./execute_deploys_crons.sh \
+              crons/honeygain
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_WORKERS_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_WORKERS_ACCOUNT_ID }}
