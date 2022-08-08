@@ -102,7 +102,7 @@ export function routesSetup(routes: Route[]) {
 
     const query = composeQueries(fetchEvent.request.url);
     if (method === 'get') {
-      const request: CustomRequest = {...fetchEvent.request.clone(), data: {}, query};
+      const request: CustomRequest = Object.assign(fetchEvent.request, {data: {}, query});
 
       fetchEvent.respondWith(
         Promise.resolve(handler(request, response)).
@@ -112,7 +112,7 @@ export function routesSetup(routes: Route[]) {
 
       const resolvePost = async () => {
         const data = await fetchEvent.request.json();
-        const request: CustomRequest = {...fetchEvent.request.clone(), data, query};
+        const request: CustomRequest = Object.assign(fetchEvent.request, {data, query});
         return Promise.resolve(handler(request, response)).
         catch(handleServerError);
       };
