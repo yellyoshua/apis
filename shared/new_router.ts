@@ -16,7 +16,8 @@ interface Route {
   handler: NewHandler;
 }
 
-function handleServerError(event: FetchEvent) {
+function handleServerError(error?: Error) {
+  console.error(error?.message);
   return new Response('Error with the server', { status: 500 });
 }
 
