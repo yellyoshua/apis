@@ -10,16 +10,20 @@ export interface Env {
 async function getTweets(tweets: any, sessions: any) {
   const tweetsData = await tweets.find(
     {posted: {$ne: true}},
-    {sort: {created_at: -1}, limit: 100}
+    {sort: {_id: 1}, limit: 100}
   );
 
+  const tweetsBySession = _(tweetsData).groupBy('session');
   const sessionIds = _(tweetsData).pluck('session');
-  const sessionsData = await sessions.find({_id: {$in: sessionIds}});
-  const sessionsMap = _(sessionsData).indexBy('_id');
 
-  return _(tweetsData).map(tweet => {
-    const {authorization} = sessionsMap[tweet.session];
-    return {tweet: tweet._id, content: tweet.content, authorization};
+  const sessionsData = await sessions.find({_id: {$in: sessionIds}});
+  const sessionsById = _(sessionsData).indexBy('_id');
+
+  return _(Object.entries(tweetsBySession)).map(([sessionId, tweets]) => {
+    const tweet = _(tweets).first();
+    const {authorization} = sessionsById[sessionId];
+
+    return {tweet: tweet._id, authorization, content: tweet.content};
   });
 }
 
@@ -46,10 +50,10 @@ async function executeTweetsCron(client: any) {
   const tweetsData = await getTweets(tweets, sessions);
 
   for (const tweet of tweetsData) {
-    const {authorization, content} = tweet;
+    const {tweet: tweetId, authorization, content} = tweet;
     const response = await sendTweet(authorization, content);
     console.log(response);
-    await tweets.update({_id: tweet.tweet}, {posted: true});
+    await tweets.update({_id: tweetId}, {posted: true});
     console.log(`Tweet ${tweet.tweet} posted!`);
   }
 }

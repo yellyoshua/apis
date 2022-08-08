@@ -19,7 +19,7 @@ const handlerTweets: NewHandler = async (request, response) => {
   const tweetsList = await tweets.find(
     // @ts-ignore
     {session: Realm.BSON.ObjectId(session)},
-    {sort: {created_at: -1}, limit: 100}
+    {sort: {_id: 1}, limit: 100}
   );
   return response.json({response: tweetsList}, 200);
 };
