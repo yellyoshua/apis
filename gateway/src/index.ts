@@ -15,6 +15,7 @@ const servicesList = [
   {path: '/periodic-table', name: 'periodic-table'},
   {path: '/films', name: 'films'},
   {path: '/badbunnyconcertecuador', name: 'badbunnyconcertecuador'},
+  {path: '/service-tweets', name: 'tweets'},
 ];
 
 export default {

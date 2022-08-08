@@ -7,4 +7,5 @@ services = [
   { binding = "periodic-table", service = "periodic-table", environment = "production" },
   { binding = "films", service = "films-service", environment = "production" },
   { binding = "badbunnyconcertecuador", service = "api-badbunnyconcertecuador", environment = "production"},
+  { binding = "tweets", service = "tweets-service", environment = "production"}
 ]
