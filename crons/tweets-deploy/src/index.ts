@@ -5,56 +5,19 @@ import { newRealmClient } from "../../../shared";
 export interface Env {
   REALM_APP_ID: string;
   REALM_APP_API_KEY: string;
+  API_KEY: string;
 }
 
-async function getTweets(tweets: any, sessions: any) {
-  const tweetsData = await tweets.find(
-    {posted: {$ne: true}},
-    {sort: {_id: 1}, limit: 100}
-  );
-
-  const tweetsBySession = _(tweetsData).groupBy('session');
-  const sessionIds = _(tweetsData).pluck('session');
-
-  const sessionsData = await sessions.find({_id: {$in: sessionIds}});
-  const sessionsById = _(sessionsData).indexBy('_id');
-
-  return _(Object.entries(tweetsBySession)).map(([sessionId, tweets]) => {
-    const tweet = _(tweets).first();
-    const {authorization} = sessionsById[sessionId];
-
-    return {tweet: tweet._id, authorization, content: tweet.content};
-  });
-}
-
-async function sendTweet(authorization: string, content: string) {
-  const response = await fetch('https://api.twitter.com/2/tweets', {
-    method: 'POST',
-    headers: {
-      Authorization: authorization,
-      'user-agent': "v2CreateTweetJS",
-      'content-type': "application/json",
-      'accept': "application/json"
-    },
-    body: JSON.stringify({
-      text: content,
-    })
-  });
-
-  return response.json();
-}
-
-async function executeTweetsCron(client: any) {
+async function executeTweetsCron(client: any, env: Env, ctx: ExecutionContext) {
   const tweets = await client.crud("tweets");
   const sessions = await client.crud("sessions");
   const tweetsData = await getTweets(tweets, sessions);
 
   for (const tweet of tweetsData) {
-    const {tweet: tweetId, authorization, content} = tweet;
-    const response = await sendTweet(authorization, content);
+    const response = await postTweet(tweet, env, ctx);
     console.log(response);
-    await tweets.update({_id: tweetId}, {posted: true});
-    console.log(`Tweet ${tweet.tweet} posted!`);
+    await tweets.update({_id: tweet.tweetId}, {posted: true});
+    console.log(`Tweet ${tweet.tweetId} posted!`);
   }
 }
 
@@ -69,6 +32,31 @@ export default {
       REALM_APP_API_KEY: env.REALM_APP_API_KEY
     }).mongoClient('tweet-bot');
 
-    ctx.waitUntil(executeTweetsCron(client));
+    ctx.waitUntil(executeTweetsCron(client, env, ctx));
 	},
 };
+
+async function postTweet(tweet: {sessionId: string, tweetId: string}, env: Env, ctx: ExecutionContext) {
+  const tweetServiceRequest = new Request('/twitter-post-tweet', {
+    method: 'POST',
+    headers: {
+      authorization: `${env.API_KEY}`,
+    },
+    body: JSON.stringify(tweet)
+  })
+  // @ts-ignore
+  return Promise.resolve(env.tweets.fetch(tweetServiceRequest, env, ctx));
+}
+
+async function getTweets(tweets: any, sessions: any) {
+  const tweetsData = await tweets.find(
+    {posted: {$ne: true}},
+    {sort: {_id: 1}, limit: 100}
+  );
+  const tweetsBySession = _(tweetsData).groupBy('session');
+
+  return _(Object.entries(tweetsBySession)).map(([sessionId, tweets]) => {
+    const tweet = _(tweets).first();
+    return {tweetId: tweet._id, sessionId};
+  });
+}
