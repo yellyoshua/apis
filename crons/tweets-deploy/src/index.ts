@@ -6,18 +6,23 @@ export interface Env {
   REALM_APP_ID: string;
   REALM_APP_API_KEY: string;
   API_KEY: string;
+  TWITTER_SERVICE_URL: string;
 }
 
 async function executeTweetsCron(client: any, env: Env, ctx: ExecutionContext) {
   const tweets = await client.crud("tweets");
-  const sessions = await client.crud("sessions");
-  const tweetsData = await getTweets(tweets, sessions);
+
+  const tweetsData = await getTweets(tweets);
 
   for (const tweet of tweetsData) {
-    const response = await postTweet(tweet, env, ctx);
+    const response = await postTweet(tweet, env);
     console.log(response);
-    await tweets.update({_id: tweet.tweetId}, {posted: true});
-    console.log(`Tweet ${tweet.tweetId} posted!`);
+    if (response.status === 200) {
+      await tweets.update({_id: tweet.tweetId}, {posted: true});
+      console.log(`Tweet ${tweet.tweetId} posted!`);
+    } else {
+      console.log(`Error while trying to post tweet ${tweet.tweetId}`);
+    }
   }
 }
 
@@ -36,19 +41,21 @@ export default {
 	},
 };
 
-async function postTweet(tweet: {sessionId: string, tweetId: string}, env: Env, ctx: ExecutionContext) {
-  const tweetServiceRequest = new Request('/twitter-post-tweet', {
+async function postTweet(tweet: {sessionId: string, tweetId: string}, env: Env) {
+  const tweetServiceRequest = await fetch(env.TWITTER_SERVICE_URL +  'twitter-post-tweet', {
     method: 'POST',
     headers: {
       authorization: `${env.API_KEY}`,
     },
     body: JSON.stringify(tweet)
-  })
-  // @ts-ignore
-  return Promise.resolve(env.tweets.fetch(tweetServiceRequest, env, ctx));
+  });
+
+  const data = await tweetServiceRequest.text();
+  const response = safeJsonParse(data);
+  return Object.assign(response, {status: tweetServiceRequest.status});
 }
 
-async function getTweets(tweets: any, sessions: any) {
+async function getTweets(tweets: any) {
   const tweetsData = await tweets.find(
     {posted: {$ne: true}},
     {sort: {_id: 1}, limit: 100}
@@ -59,4 +66,12 @@ async function getTweets(tweets: any, sessions: any) {
     const tweet = _(tweets).first();
     return {tweetId: tweet._id, sessionId};
   });
+}
+
+export function safeJsonParse(str: any, def = {}) {
+	try {
+		return typeof str === 'string' ? JSON.parse(str) : {};
+	} catch (error) {
+		return def;
+	}
 }
