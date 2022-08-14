@@ -171,6 +171,33 @@ const handlerTwitterPostTweet: NewHandler = async (req, response) => {
   }
 }
 
+const handlerTwitterSession: NewHandler = async (req, response) => {
+  try {
+    if (!hasAuthorization(getHeaderValue(req.headers, 'authorization'))) {
+      return response.json({error: "Unauthorized"}, 401);
+    }
+
+    const sessions = await client.crud("sessions");
+    const sessionId = req.query.session;
+    // @ts-ignore
+    const sessionData = await sessions.findOne({_id: Realm.BSON.ObjectID(sessionId)});
+
+    if (!sessionData) {
+      return response.json({errors: ["Session not found"]}, 404);
+    }
+
+    const session = {
+      _id: sessionData._id,
+      username: sessionData.username,
+    };
+
+    return response.json({response: session}, 200);
+  } catch (error) {
+    console.log(error);
+    return response.json({errors: ['Error while trying to get session']}, 400);
+  }
+};
+
 const handlerStatus: NewHandler = async (req, response) => {
   return response.json({response: "OK"}, 200);
 }
@@ -179,6 +206,7 @@ addEventListener("fetch", routesSetup([
   { path: "/twitter-authorization", method: 'get', handler: handlerNewTwitterAuthorization },
   { path: "/twitter-authorization-callback", method: 'get', handler: handlerTwitterAuthorizationCallback },
   { path: "/twitter-post-tweet", method: 'post', handler: handlerTwitterPostTweet },
+  { path: "/twitter-session", method: 'get', handler: handlerTwitterSession },
   { path: "/tweets", method: 'get', handler: handlerTweets },
   { path: "/tweets", method: 'post', handler: handlerNewTweet },
   { path: "/status", method: 'get', handler: handlerStatus },
