@@ -3329,7 +3329,7 @@
   "resolved" "https://registry.npmjs.org/natural-compare/-/natural-compare-1.4.0.tgz"
   "version" "1.4.0"
 
-"node-fetch@^2.6.0":
+"node-fetch@^2.6.0", "node-fetch@^2.6.1":
   "integrity" "sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ=="
   "resolved" "https://registry.npmjs.org/node-fetch/-/node-fetch-2.6.7.tgz"
   "version" "2.6.7"
@@ -3961,6 +3961,14 @@
     "mkdirp" "1.x"
     "semver" "7.x"
     "yargs-parser" "20.x"
+
+"twitter-api-sdk@^1.1.0":
+  "integrity" "sha512-EmYSUwf1rw57h7fnq8SLtMSt6+8orr1N4q5m5J+R/ZSzvvo3QCCyJC973/OCxH5j9F1iV0vqpLmYh/Yq87XjLA=="
+  "resolved" "https://registry.npmjs.org/twitter-api-sdk/-/twitter-api-sdk-1.1.0.tgz"
+  "version" "1.1.0"
+  dependencies:
+    "abort-controller" "^3.0.0"
+    "node-fetch" "^2.6.1"
 
 "type-check@~0.3.2":
   "integrity" "sha512-ZCmOJdvOWDBYJlzAoFkC+Q0+bUyEOS1ltgp1MGU03fqHG+dbi9tBFU2Rd9QKiDZFAYrhPh2JUf7rZRIuHRKtOg=="
