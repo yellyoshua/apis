@@ -1,6 +1,7 @@
 
 export interface CustomResponse {
   json: (data: Record<string, any>, status: number) => Response;
+  redirect: (url: string, status?: number) => Response;
 }
 
 export interface CustomRequest extends Request {
@@ -97,6 +98,9 @@ export function routesSetup(routes: Route[]) {
     const response: CustomResponse = {
       json: (data, status) => {
         return new Response(JSON.stringify(data), { status });
+      },
+      redirect: (url, status = 302) => {
+        return Response.redirect(url, status);
       }
     };
 
