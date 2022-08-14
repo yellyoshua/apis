@@ -36,18 +36,31 @@ const handlerNewTweet: NewHandler = async (req, response) => {
     return response.json({error: "Unauthorized"}, 401);
   }
 
-  const {session, content} = req.data;
+  const {session, content, _id: tweetId} = req.data;
   if (!session || !content) {
     return response.json({error: "Missing session or content"}, 400);
   }
 
-  const sessions = await client.crud("sessions");
+  const [sessions, tweets] = await Promise.all([
+    client.crud("sessions"),
+    client.crud("tweets")
+  ]);
+
   // @ts-ignore
   const sessionData = await sessions.findOne({_id: Realm.BSON.ObjectID(session)});
   if (!sessionData) {
     return response.json({error: "Session not found"}, 404);
   }
-  const tweets = await client.crud("tweets");
+
+  if (tweetId) {
+    // @ts-ignore
+    const newTweet = await tweets.update({_id: Realm.BSON.ObjectID(tweetId)}, {
+      content: content
+    });
+
+    return response.json(newTweet, 200);
+  }
+
   const newTweet = await tweets.insert({
     session: sessionData._id,
     content,
