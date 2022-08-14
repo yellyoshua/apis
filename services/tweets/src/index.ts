@@ -46,13 +46,18 @@ const handlerNewTweet: NewHandler = async (req, response) => {
     client.crud("tweets")
   ]);
 
-  // @ts-ignore
-  const sessionData = await sessions.findOne({_id: Realm.BSON.ObjectID(session)});
+  const [sessionData, canUpdateTweet] = await Promise.all([
+    // @ts-ignore
+    sessions.findOne({_id: Realm.BSON.ObjectID(session)}),
+    // @ts-ignore
+    tweets.findOne({_id: Realm.BSON.ObjectID(tweetId), posted: false})
+  ]);
+
   if (!sessionData) {
     return response.json({error: "Session not found"}, 404);
   }
 
-  if (tweetId) {
+  if (tweetId && canUpdateTweet) {
     // @ts-ignore
     const newTweet = await tweets.update({_id: Realm.BSON.ObjectID(tweetId)}, {
       content: content
