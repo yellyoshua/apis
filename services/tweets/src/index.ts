@@ -50,14 +50,14 @@ const handlerNewTweet: NewHandler = async (req, response) => {
     // @ts-ignore
     sessions.findOne({_id: Realm.BSON.ObjectID(session)}),
     // @ts-ignore
-    tweets.findOne({_id: Realm.BSON.ObjectID(tweetId), posted: false})
+    tweets.findOne({_id: Realm.BSON.ObjectID(tweetId), posted: {$ne: true}})
   ]);
 
   if (!sessionData) {
     return response.json({error: "Session not found"}, 404);
   }
 
-  if (tweetId && canUpdateTweet) {
+  if (canUpdateTweet) {
     // @ts-ignore
     const newTweet = await tweets.update({_id: Realm.BSON.ObjectID(tweetId)}, {
       content: content
