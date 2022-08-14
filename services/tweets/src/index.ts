@@ -190,6 +190,7 @@ const handlerTwitterSession: NewHandler = async (req, response) => {
     const session = {
       _id: sessionData._id,
       username: sessionData.username,
+      profile_image_url: sessionData.profile_image_url,
     };
 
     return response.json({response: session}, 200);
