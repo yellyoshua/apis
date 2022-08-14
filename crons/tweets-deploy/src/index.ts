@@ -18,7 +18,7 @@ async function executeTweetsCron(client: any, env: Env, ctx: ExecutionContext) {
     const response = await postTweet(tweet, env);
     console.log(response);
     if (response.status === 200) {
-      await tweets.update({_id: tweet.tweetId}, {posted: true});
+      await tweets.update({_id: tweet.tweetId}, {posted: true, twitterId: response.id});
       console.log(`Tweet ${tweet.tweetId} posted!`);
     } else {
       console.log(`Error while trying to post tweet ${tweet.tweetId}`);
@@ -51,7 +51,7 @@ async function postTweet(tweet: {sessionId: string, tweetId: string}, env: Env) 
   });
 
   const data = await tweetServiceRequest.text();
-  const response = safeJsonParse(data);
+  const response = safeJsonParse(data).response;
   return Object.assign(response, {status: tweetServiceRequest.status});
 }
 
