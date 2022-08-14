@@ -74,11 +74,12 @@ const handlerTwitterAuthorizationCallback: NewHandler = async (req, response) =>
     const {token} = await authClient.requestAccessToken(code as string);
 
     const twitter = await twitterClient.users.findMyUser({
-      "user.fields": ["username"]
+      "user.fields": ["username", "profile_image_url"]
     });
     const username = twitter.data?.username;
     const session = await sessions.findOne({username});
     const newSessionData = {
+      profile_image_url: twitter.data?.profile_image_url || null,
       token_type: token.token_type,
       scope: token.scope,
       refresh_token: token.refresh_token,
