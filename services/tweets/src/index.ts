@@ -100,6 +100,7 @@ const handlerTwitterAuthorizationCallback: NewHandler = async (req, response) =>
       profile_image_url: twitter.data?.profile_image_url || null,
       token_type: token.token_type,
       scope: token.scope,
+      access_token: token.access_token,
       refresh_token: token.refresh_token,
       expires_at: token.expires_at,
     };
