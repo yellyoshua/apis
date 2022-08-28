@@ -1,4 +1,14 @@
 
+const createCORSHeaders = (): Headers => {
+  const headers = new Headers({});
+
+  headers.append("Access-Control-Allow-Origin", "*");
+  headers.append("Access-Control-Allow-Methods", "GET,HEAD,POST,OPTIONS");
+  headers.append("Access-Control-Max-Age", "86400");
+
+  return headers;
+};
+
 export interface CustomResponse {
   json: (data: Record<string, any>, status: number) => Response;
   redirect: (url: string, status?: number) => Response;
@@ -97,7 +107,8 @@ export function routesSetup(routes: Route[]) {
 
     const response: CustomResponse = {
       json: (data, status) => {
-        return new Response(JSON.stringify(data), { status });
+        const headers = createCORSHeaders();
+        return new Response(JSON.stringify(data), { status, headers });
       },
       redirect: (url, status = 302) => {
         return Response.redirect(url, status);
