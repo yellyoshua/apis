@@ -12,7 +12,7 @@ const authClient = new auth.OAuth2User({
 const twitterClient = new Client(authClient);
 const twitterClientState = 'twitterClientState';
 const twitterClientCodeChallenge = 'a543d136-2cc0-4651-b571-e972bf116550';
-const twitterAppCallback = 'https://tweets.devenvironment.me/';
+const twitterAppCallback = 'https://tweets.yoshualopez.com/';
 
 const client = newRealmClient(Realm, {
   REALM_APP_ID: REALM_APP_ID,
