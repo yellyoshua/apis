@@ -38,6 +38,7 @@ jobs:
               services/globish \
               services/films \
               services/periodic-table \
+              services/random \
               services/tweets
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_WORKERS_API_TOKEN }}

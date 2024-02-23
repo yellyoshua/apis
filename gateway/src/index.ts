@@ -12,6 +12,7 @@ export interface Env {
 
 const servicesList = [
   {path: '/globish', name: 'globish'},
+  {path: '/random', name: 'random'},
   {path: '/periodic-table', name: 'periodic-table'},
   {path: '/films', name: 'films'},
   {path: '/badbunnyconcertecuador', name: 'badbunnyconcertecuador'},

@@ -3,6 +3,7 @@ main = "src/index.ts"
 compatibility_date = "2022-07-18"
 
 services = [
+  { binding = "random", service = "random-service", environment = "production" },
   { binding = "globish", service = "globish-service", environment = "production" },
   { binding = "periodic-table", service = "periodic-table", environment = "production" },
   { binding = "films", service = "films-service", environment = "production" },
