@@ -117,7 +117,7 @@ const handlerTwitterAuthorizationCallback: NewHandler = async (req, response) =>
     url.searchParams.set('session', safeToString(newSession._id));
     return response.redirect(url.toString());
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return response.json({errors: ['Error while trying to get access token']}, 400);
   }
 };
@@ -132,7 +132,7 @@ const handlerNewTwitterAuthorization: NewHandler = async (req, response) => {
 
     return response.redirect(authUrl, 301);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return response.json({errors: ['Error generating authorization url']}, 400);
   }
 };
@@ -186,7 +186,7 @@ const handlerTwitterPostTweet: NewHandler = async (req, response) => {
 
     return response.json({response: data}, 200);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return response.json({errors: ['Error while trying to post tweet']}, 400);
   }
 }
@@ -214,7 +214,7 @@ const handlerTwitterSession: NewHandler = async (req, response) => {
 
     return response.json({response: session}, 200);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return response.json({errors: ['Error while trying to get session']}, 400);
   }
 };
