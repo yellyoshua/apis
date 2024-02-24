@@ -1,9 +1,11 @@
 import {Hono} from 'hono';
 import {prettyJSON} from 'hono/pretty-json';
+import {logger} from 'hono/logger';
 
 const app = new Hono();
 
 app.use(prettyJSON());
+app.use(logger());
 
 app.get('/username', (c) => {
   const username = Math.random().toString(36).substring(2, 15);
