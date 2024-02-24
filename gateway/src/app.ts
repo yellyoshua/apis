@@ -1,7 +1,17 @@
 import { Hono } from "hono";
 import { prettyJSON } from "hono/pretty-json";
 
-const app = new Hono({});
+type Bindings = {
+  [key: string]: {
+    fetch: (
+      req: Request,
+      env: Record<string, any>,
+      ctx: any
+    ) => Promise<Response>;
+  };
+};
+
+const app = new Hono<{ Bindings: Bindings }>({});
 
 app.use(prettyJSON());
 
@@ -28,8 +38,8 @@ type Service = keyof typeof services;
 app.get("/:service", (c) => {
   const service = c.req.param("service");
 
-  if (service || env[service]) {
-    return env[service].fetch(c.req, env, c);
+  if (service || c.env[service]) {
+    return c.env[service].fetch(c.req.raw, c.env, c.executionCtx);
   }
 
   const { pathname } = new URL(c.req.url);
@@ -38,8 +48,8 @@ app.get("/:service", (c) => {
     return pathname.startsWith(services[name as Service]);
   });
 
-  if (serviceName && env[serviceName]) {
-    return env[serviceName].fetch(c.req, env, c);
+  if (serviceName && c.env[serviceName]) {
+    return c.env[serviceName].fetch(c.req.raw, c.env, c.executionCtx);
   }
 
   return c.json({ error: "Service not found" }, { status: 404 });
@@ -48,7 +58,7 @@ app.get("/:service", (c) => {
 app.get("/", (c) => {
   return c.json(
     {
-      services: Object.keys(env),
+      services: Object.keys(c.env),
       connectedServices: Object.keys(services),
     },
     200
