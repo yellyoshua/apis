@@ -3,12 +3,12 @@
   "version": "0.0.0",
   "devDependencies": {
     "@cloudflare/workers-types": "4.20240222.0",
-    "wrangler": "3.29.0"
+    "wrangler": "^3.0.0"
   },
   "private": true,
   "scripts": {
     "start": "wrangler dev",
-    "deploy": "wrangler publish"
+    "deploy": "wrangler deploy"
   },
   "dependencies": {
     "hono": "4.0.6"
