@@ -2,7 +2,19 @@ import {Hono} from 'hono';
 import {prettyJSON} from 'hono/pretty-json';
 import {logger} from 'hono/logger';
 
-const app = new Hono();
+const app = new Hono({
+  getPath: (req) => {
+    const {pathname} = new URL(req.url);
+
+    if (pathname.startsWith('/random')) {
+      return pathname
+      .replace('/random', '/')
+      .replace(/^\/\/+/, '/');
+    }
+
+    return req.url;
+  }
+});
 
 app.use(prettyJSON());
 app.use(logger());
