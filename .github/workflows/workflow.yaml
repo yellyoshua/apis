@@ -77,7 +77,7 @@ jobs:
       - name: Deploy gateway
         working-directory: gateway
         run: |
-          npx --yes wrangler publish --env production
+          npx --yes wrangler deploy
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_WORKERS_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_WORKERS_API_TOKEN }}
