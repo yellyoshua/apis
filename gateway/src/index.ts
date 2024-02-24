@@ -24,6 +24,7 @@ export default {
     const {pathname} = new URL(request.url);
     const basePath = cleanPath(pathname);
     const service = servicesList.find(({path}) => basePath === path);
+    console.log('env :', env);
 
     return service
       // @ts-ignore
