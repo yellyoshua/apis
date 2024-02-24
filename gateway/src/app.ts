@@ -11,19 +11,6 @@ type Bindings = {
   };
 };
 
-const app = new Hono<{ Bindings: Bindings }>({});
-
-app.use(prettyJSON());
-
-// const servicesList = [
-//   {path: '/globish', name: 'globish'},
-//   {path: '/random', name: 'random'},
-//   {path: '/periodic-table', name: 'periodic-table'},
-//   {path: '/films', name: 'films'},
-//   {path: '/badbunnyconcertecuador', name: 'badbunnyconcertecuador'},
-//   {path: '/service-tweets', name: 'tweets'},
-// ];
-
 const services = {
   globish: "/service-globish",
   random: "/service-random",
@@ -34,6 +21,10 @@ const services = {
 };
 
 type Service = keyof typeof services;
+
+const app = new Hono<{ Bindings: Bindings }>({});
+
+app.use(prettyJSON({ space: 4 }));
 
 app.get("/:service/*", (c) => {
   const service = c.req.param("service");
