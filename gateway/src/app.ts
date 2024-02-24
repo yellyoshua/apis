@@ -28,7 +28,7 @@ type Service = keyof typeof services;
 app.get("/:service", (c) => {
   const service = c.req.param("service");
 
-  if (!service || !env[service]) {
+  if (service || env[service]) {
     return env[service].fetch(c.req, env, c);
   }
 
