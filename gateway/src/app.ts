@@ -35,10 +35,10 @@ const services = {
 
 type Service = keyof typeof services;
 
-app.get("/:service", (c) => {
+app.get("/:service/*", (c) => {
   const service = c.req.param("service");
 
-  if (service || c.env[service]) {
+  if (service && Boolean(c.env[service])) {
     return c.env[service].fetch(c.req.raw, c.env, c.executionCtx);
   }
 
