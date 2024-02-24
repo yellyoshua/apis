@@ -12,7 +12,7 @@ const app = new Hono({
       .replace(/^\/\/+/, '/');
     }
 
-    return req.url;
+    return pathname;
   }
 });
 
