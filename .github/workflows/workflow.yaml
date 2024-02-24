@@ -61,10 +61,10 @@ jobs:
       - uses: actions/checkout@master
       - uses: actions/setup-node@v2
         with:
-          node-version: 16.13.x
+          node-version: 20.10.x
       - name: Install packages
         working-directory: gateway
-        run: yarn install
+        run: npm install
 
       - name: Deploy Worker
         uses: cloudflare/wrangler-action@2.0.0
