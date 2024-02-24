@@ -1,5 +1,5 @@
 name = "gateway"
-main = "src/index.ts"
+main = "src/app.ts"
 compatibility_date = "2022-07-18"
 
 services = [
